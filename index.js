@@ -20,41 +20,25 @@ const show = () => {
 };
 //Merges the state. Makes sure that the components only gets the properties that it uses
 const mergeState = (component, globalState) => {
-  let mergedStateEntries = [];
-
   if (!Object.keys(component.state).length) return component.state;
-
   Object.entries(globalState.state).forEach((value) => {
-    if (Object.entries(component.state)[0][0] === value[0]) {
-      mergedStateEntries.push(value);
+    if (component.state.hasOwnProperty(value[0])) {
+      component.state[value[0]] = value[1];
     }
   });
 
-  return Object.fromEntries(mergedStateEntries);
+  return component.state;
 };
 //Only updates the states that are dependant on the property that was changed
 const updateState = (component, changed) => {
-  Object.entries(changed.state).forEach((value) => {
-    console.log(Object.entries(component.state)[0][0], value[0]);
-    if (Object.entries(component.state)[0][0] === value[0]) {
-      mergeState(component, changed);
-      let mergeStateEntries = [];
-      Object.entries(changed.state).forEach((value) => {
-        if (Object.entries(component.state)[0][0] === value[0]) {
-          mergeStateEntries.push(value);
-        }
-      });
-
-      component.setState(Object.fromEntries(mergeStateEntries));
-    }
-  });
+  component.setState(mergeState(component, changed));
 };
 //Attaches a lister to a component
 const updates = (component) => {
   document.addEventListener("stateChanged", (event) => {
     updateState(component, event.detail);
   });
-  let globalState = { state: show() };
+  let globalState = { state: now };
   component.state = mergeState(component, globalState);
 };
 const newProperty = (propertyName, property) => {
