@@ -24,7 +24,7 @@ npm i @scythodemes/lightweightglobalstate
 
 #### Documentation
 
-##### 1) **_<variable name>.show()_**
+##### 1) **_State.show()_**
 
 Returns a field of global properties of the global state in the form of an object.
 
@@ -32,7 +32,7 @@ Returns a field of global properties of the global state in the form of an objec
 _import **State** from "@scythodemes/lightweightglobalstate"_  
 _console.log(**State.show()**)_
 
-##### 2) **_<variable name>.updates(<component (component)>)_**
+##### 2) **_State.updates(<component (component)>)_**
 
 Binds a component to the global state so that it updates when the component has a global property in its local state and when the global state updates. This function should be called in the constructor of a component.
 
@@ -45,7 +45,7 @@ _this.state = { G_number: 0 };_
 **_State.updates(this);_**  
 _}}_
 
-##### 3) **_<variable name>.changes(<callback (function)>)_**
+##### 3) **_State.changes(<callback (function)>)_**
 
 Changes the Global State directly via the function in its argument.
 
@@ -58,7 +58,7 @@ _this.state = { G_number: 0 };_
 **_State.changes( () => {State.property++} ));_**  
 _}}_
 
-##### 4)**_<variable name>.newProperty(<propertyName (string)>, <propertyValue (any)>)_**
+##### 4)**_State.newProperty(<propertyName (string)>, <propertyValue (any)>)_**
 
 Adds a new property to the Global State.
 
@@ -72,7 +72,7 @@ _State.updates(this);_
 **_State.newProperty("newProperty", 1)_**  
 _}}_
 
-##### 5)**_<variable name>.removeProperty(<propertyName (string)>)_**
+##### 5)**_State.removeProperty(<propertyName (string)>)_**
 
 Removes a property in the Global State.
 
@@ -86,7 +86,7 @@ _State.updates(this);_
 **_State.removeProperty("newProperty")_**  
 _}}_
 
-##### 6)**_<variable name>.updateState(<component (component)>, <globalState (globalState)>_**
+##### 6)**_State.updateState(<component (component)>, <globalState (globalState)>_**
 
 Manually merges the local state with the global state
 
