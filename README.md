@@ -55,7 +55,7 @@ _class App extends React.Component{_
 _constructor(props) {_  
 _super(props);_  
 _this.state = { G_number: 0 };_  
-**_State.changes( () => {State.property++} ));_**  
+**_State.now.changes( () => {State.property++} ));_**  
 _}}_
 
 ##### 4)**_State.newProperty(<propertyName (string)>, <propertyValue (any)>)_**
