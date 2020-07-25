@@ -74,7 +74,7 @@ _}}_
 
 ##### 5)**_State.removeProperty(<propertyName (string)>)_**
 
-Removes a property in the Global State.
+Removes a property from the Global State.
 
 **ex:**  
 _import **State** from "@scythodemes/lightweightglobalstate"_  
