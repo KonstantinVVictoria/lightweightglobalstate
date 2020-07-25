@@ -8,18 +8,18 @@ Lightweight Global State is a lightweight module that allows you to use global s
 npm i @scythodemes/lightweightglobalstate
 ```
 
-1. Import
-   Import to your react javascript files via **_import <variable name> from "@scythodemes/lightweightglobalstate"_**
+1. Import  
+   Import to your react javascript files via **_import <variable name> from "@scythodemes/lightweightglobalstate"_**  
    Import to your react typescript files via **_const <variable name> = require("@scythodemes/lightweightglobalstate")_**
 2. Create a GlobalState.js file
-   The file must have an object containing all your global properties and must export that object.
+   The file must be in your src folder and must have an object containing all your global properties and must export that object.
 
 #### Naming Conventions:
 
-1. Global variables should follow the naming convention G\_<variable name> to separate it from local state variables.
+1. Global variables should follow the naming convention G\_<variable name> to separate it from local state variables.  
    **ex:** "G_globalProperty"
 
-2. Import variable convention for react javascript files is "State".
+2. Import variable convention for react javascript files is "State".  
    **ex:** _import State from "@scythodemes/lightweightglobalstate"_
 
 #### Documentation
