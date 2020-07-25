@@ -35,6 +35,7 @@ const mergeState = (component, globalState) => {
 //Only updates the states that are dependant on the property that was changed
 const updateState = (component, changed) => {
   Object.entries(changed.state).forEach((value) => {
+    console.log(Object.entries(component.state)[0][0], value[0]);
     if (Object.entries(component.state)[0][0] === value[0]) {
       mergeState(component, changed);
       let mergeStateEntries = [];
@@ -53,6 +54,8 @@ const updates = (component) => {
   document.addEventListener("stateChanged", (event) => {
     updateState(component, event.detail);
   });
+  let globalState = { state: show() };
+  component.state = mergeState(component, globalState);
 };
 const newProperty = (propertyName, property) => {
   now[propertyName] = property;
