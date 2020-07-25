@@ -45,7 +45,7 @@ _this.state = { G_number: 0 };_
 **_State.updates(this);_**  
 _}}_
 
-##### 3) **_State.changes(<callback (function)>)_**
+##### 3) **_State.changesTo(<callback (function)>)_**
 
 Changes the Global State directly via the function in its argument.
 

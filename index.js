@@ -50,7 +50,7 @@ const removeProperty = (propertyName) => {
 };
 
 //Changes the State
-const change = (callback) => {
+const changesTo = (callback) => {
   callback();
   document.dispatchEvent(
     new CustomEvent("stateChanged", {
@@ -67,7 +67,7 @@ var State = {
   updates,
   newProperty,
   removeProperty,
-  change,
+  changesTo,
 };
 
 export default State;
