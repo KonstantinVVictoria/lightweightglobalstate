@@ -1,47 +1,58 @@
 import GlobalState from "../../../src/GlobalState";
 
-const now = Object.fromEntries(
-  Object.entries(GlobalState).filter(
-    (properties) => typeof properties[1] != "function"
-  )
-);
+var currentAction = "";
+var now = GlobalState;
 
-//Coverts the constiables into a state object
-const toObject = () => {
-  let globalState = {};
-  return (globalState.state = Object.fromEntries(
-    Object.entries(now).filter(
-      (properties) => typeof properties[1] != "function"
-    )
-  ));
-};
 const show = () => {
-  return toObject();
+  return now;
 };
-//Merges the state. Makes sure that the components only gets the properties that it uses
-const mergeState = (component, globalState) => {
+
+const mergeState = (component, now) => {
   if (!Object.keys(component.state).length) return component.state;
-  Object.entries(globalState.state).forEach((value) => {
-    if (component.state.hasOwnProperty(value[0])) {
-      component.state[value[0]] = value[1];
+  Object.entries(now).forEach((property) => {
+    if (component.state.hasOwnProperty(property[0])) {
+      component.state[property[0]] = property[1];
     }
   });
-
   return component.state;
 };
-//Only updates the states that are dependant on the property that was changed
-const updateState = (component, changed) => {
-  component.setState(mergeState(component, changed));
+
+const updateState = (component, changes) => {
+  let isChangedComponent = false;
+  changes.changedProperties.forEach((property) => {
+    if (component.state[property] !== undefined) {
+      isChangedComponent = true;
+    }
+  });
+  if (isChangedComponent) {
+    component.setState(mergeState(component, now));
+  }
 };
-//Attaches a lister to a component
+
 const updates = (component) => {
   document.addEventListener("stateChanged", (event) => {
     updateState(component, event.detail);
   });
-  let globalState = { state: now };
-  component.state = mergeState(component, globalState);
+  component.state = mergeState(component, now);
 };
-const newProperty = (propertyName, property) => {
+
+const changesTo = (changes) => {
+  let changedProperties = [];
+  Object.entries(changes).forEach((change) => {
+    currentAction = change[1]();
+    changedProperties.push(change[0]);
+  });
+  document.dispatchEvent(
+    new CustomEvent("stateChanged", {
+      detail: {
+        changedProperties: changedProperties,
+        now: now,
+      },
+    })
+  );
+};
+
+const addProperty = (propertyName, property) => {
   now[propertyName] = property;
 };
 
@@ -49,23 +60,12 @@ const removeProperty = (propertyName) => {
   delete now[propertyName];
 };
 
-//Changes the State
-const changesTo = (callback) => {
-  callback();
-  document.dispatchEvent(
-    new CustomEvent("stateChanged", {
-      detail: { state: toObject() },
-    })
-  );
-};
-
 var State = {
   now,
-  toObject,
   show,
   updateState,
   updates,
-  newProperty,
+  addProperty,
   removeProperty,
   changesTo,
 };
